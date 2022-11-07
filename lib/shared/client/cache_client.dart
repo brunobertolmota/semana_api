@@ -1,4 +1,4 @@
 abstract class CacheStore {
-  Future wiretData ({required String key, required list});
+  Future writeData ({required String key, required list});
   void readData({required String key});
 }

@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: const Text('salvar no cache')),
               ElevatedButton(
                   onPressed: () {
-                    controller.laodData();
+                    controller.loadData();
                   },
                   child: const Text('carregar do cache')),
               ElevatedButton(
@@ -64,13 +64,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     inspect(controller.offlineList);
                   },
                   child: const Text('inspecionar dados do cache')),
-              ElevatedButton(
-                  onPressed: () {
-                    inspect(controller.offlineList);
-                  },
-                  child: const Text('inspecionar dados do cache')),
+              TextField( 
+                onChanged: controller.textFilterName,
+              ),
               TextField(
-                onChanged: controller.textFieldValue,
+                onChanged: controller.textFilterAge,
               ),
             ],
           ),

@@ -59,7 +59,7 @@ class Controller {
     await prefs.setStringList(keyShared, cacheList);
   }
 
-  Future<List<ApitesteModel>> laodData() async {
+  Future<List<ApitesteModel>> loadData() async {
     final prefs = await SharedPreferences.getInstance();
     final cacheList = prefs.getStringList(keyShared);
     if (cacheList != null) {
@@ -71,8 +71,13 @@ class Controller {
     return [];
   }
 
-  textFieldValue(String value) {
+  textFilterName(String value) {
     List<ApitesteModel> listFiltered = offlineList.where((e) => e.nome.toString().contains(value)).toList();
+    inspect(listFiltered);
+  }
+
+  textFilterAge(String value) {
+    List<ApitesteModel> listFiltered = offlineList.where((e) => e.idade.toString().contains(value)).toList();
     inspect(listFiltered);
   }
 }
