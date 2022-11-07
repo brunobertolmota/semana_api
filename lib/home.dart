@@ -16,6 +16,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final controller = Controller();
+  final dio = Dio();
 
   @override
   Widget build(BuildContext context) {
@@ -24,23 +25,55 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'API request',
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  controller.getDataController();
-                },
-                child: const Text('get')),
-            ElevatedButton(
-                onPressed: () {
-                  controller.postDataController('Amanda', 23);
-                },
-                child: const Text('post')),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text(
+                'API request',
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                    log('lista');
+                    inspect(controller.onlineList);
+                  },
+                  child: const Text('lista')),
+              ElevatedButton(
+                  onPressed: () {
+                    controller.getDataController();
+                  },
+                  child: const Text('get')),
+              ElevatedButton(
+                  onPressed: () async {
+                    await controller.postDataController('Joana', 30);
+                  },
+                  child: const Text('post')),
+              ElevatedButton(
+                  onPressed: () {
+                    log('salvando dados no cache...');
+                    controller.saveData();
+                  },
+                  child: const Text('salvar no cache')),
+              ElevatedButton(
+                  onPressed: () {
+                    controller.laodData();
+                  },
+                  child: const Text('carregar do cache')),
+              ElevatedButton(
+                  onPressed: () {
+                    inspect(controller.offlineList);
+                  },
+                  child: const Text('inspecionar dados do cache')),
+              ElevatedButton(
+                  onPressed: () {
+                    inspect(controller.offlineList);
+                  },
+                  child: const Text('inspecionar dados do cache')),
+              TextField(
+                onChanged: controller.textFieldValue,
+              ),
+            ],
+          ),
         ),
       ),
     );

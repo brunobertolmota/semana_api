@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:semana_api/model/model.dart';
 import 'package:semana_api/shared/client/dio_implement.dart';
 import 'package:semana_api/shared/app_configurations.dart';
@@ -30,8 +28,7 @@ class GetDataRepoService {
     }
   }
 
-
-  Future<List<ApitesteModel>> postData(body) async {
+  Future<List<ApitesteModel>> postData({body}) async {
     final response = await client.post(path: AppConfigurations.mockUrl, body: body);
     switch (response.statusCode) {
       case 403:
