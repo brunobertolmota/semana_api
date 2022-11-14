@@ -4,7 +4,9 @@ import 'package:semana_api/shared/app_configurations.dart';
 import 'package:semana_api/shared/error/errors.dart';
 
 class GetDataRepoService {
-  final client = DioClientImplement();
+  final DioClientImplement client;
+
+  GetDataRepoService({required this.client});
 
   Future<List<ApitesteModel>> getData() async {
     final response = await client.get(path: AppConfigurations.mockUrl);
@@ -29,7 +31,8 @@ class GetDataRepoService {
   }
 
   Future<List<ApitesteModel>> postData({body}) async {
-    final response = await client.post(path: AppConfigurations.mockUrl, body: body);
+    final response =
+        await client.post(path: AppConfigurations.mockUrl, body: body);
     switch (response.statusCode) {
       case 403:
         throw ForbiddenException();

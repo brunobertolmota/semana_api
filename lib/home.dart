@@ -1,9 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
 import 'package:semana_api/controller/controller.dart';
-import 'package:semana_api/model/model.dart';
+import 'package:semana_api/shared/core/dependencies.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -15,8 +14,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final controller = Controller();
-  final dio = Dio();
+  final controller = getIt<Controller>();
 
   @override
   Widget build(BuildContext context) {
@@ -64,10 +62,18 @@ class _MyHomePageState extends State<MyHomePage> {
                     inspect(controller.offlineList);
                   },
                   child: const Text('inspecionar dados do cache')),
+              ElevatedButton(
+                  onPressed: () {
+                    controller.textFilterNameAndAge(controller.input1.text, controller.input2.text);
+                  },
+                  child: const Text('filtrar por nome e idade na lista')),
               TextField( 
+                controller: controller.input1,
                 onChanged: controller.textFilterName,
               ),
+
               TextField(
+                controller: controller.input2,
                 onChanged: controller.textFilterAge,
               ),
             ],

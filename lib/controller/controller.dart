@@ -1,24 +1,30 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:semana_api/model/model.dart';
 import 'package:semana_api/service/login_service.dart';
 import 'package:semana_api/service/shared_preference.dart';
 import 'package:semana_api/shared/error/errors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Controller {
-  final loginService = GetDataRepoService();
-
-  final sharedService = SharedPreferenceTest();
+  //get it da service
+  final GetDataRepoService remoteService;
+  final SharedPreferenceTest localStorageService;
   final String keyShared = 'apiList';
+
+  Controller({required this.remoteService, required this.localStorageService});
+
+
+  TextEditingController input1 = TextEditingController();
+  TextEditingController input2 = TextEditingController();
 
   List<ApitesteModel> onlineList = [];
   List<ApitesteModel> offlineList = [];
 
   Future<void> getDataController() async {
     try {
-      onlineList = await loginService.getData();
+      onlineList = await remoteService.getData();
       // log(onlineList.toString());
       // inspect(onlineList);
     } on ForbiddenException {
@@ -37,7 +43,7 @@ class Controller {
   Future<void> postDataController(String nome, int idade) async {
     try {
       final data =
-          await loginService.postData(body: {'nome': nome, 'idade': idade});
+          await remoteService.postData(body: {'nome': nome, 'idade': idade});
       log(data.toString());
       inspect(data);
     } on ForbiddenException {
@@ -54,30 +60,45 @@ class Controller {
   }
 
   Future<void> saveData() async {
-    final prefs = await SharedPreferences.getInstance();
+    // final prefs = await SharedPreferences.getInstance();
     final cacheList = onlineList.map((e) => jsonEncode(e.toJson())).toList();
-    await prefs.setStringList(keyShared, cacheList);
+    await localStorageService.writeData(
+      key: keyShared,
+      list: cacheList,
+    );
   }
 
   Future<List<ApitesteModel>> loadData() async {
-    final prefs = await SharedPreferences.getInstance();
-    final cacheList = prefs.getStringList(keyShared);
+    // final prefs = await SharedPreferences.getInstance();
+    final cacheList = await localStorageService.readData(key: keyShared);
     if (cacheList != null) {
       offlineList =
           List<Map<String, dynamic>>.from(cacheList.map((e) => jsonDecode(e)))
               .map(ApitesteModel.fromJson)
               .toList();
+      // fazendo o sort por idade
+      // offlineList.sort(((a, b) => a.idade!.compareTo(b.idade!)));
     }
     return [];
   }
 
   textFilterName(String value) {
-    List<ApitesteModel> listFiltered = offlineList.where((e) => e.nome.toString().contains(value)).toList();
+    List<ApitesteModel> listFiltered =
+        offlineList.where((e) => e.nome.toString().contains(value)).toList();
     inspect(listFiltered);
   }
 
   textFilterAge(String value) {
-    List<ApitesteModel> listFiltered = offlineList.where((e) => e.idade.toString().contains(value)).toList();
+    List<ApitesteModel> listFiltered =
+        offlineList.where((e) => e.idade.toString().contains(value)).toList();
+    inspect(listFiltered);
+  }
+
+  // filtrando por nome e idade
+  textFilterNameAndAge(String name, String age) {
+    List<ApitesteModel> listFiltered = offlineList
+        .where((e) => e.idade.toString() == age && e.nome == name)
+        .toList();
     inspect(listFiltered);
   }
 }
