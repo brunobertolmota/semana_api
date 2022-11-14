@@ -31,8 +31,6 @@ void initializeDependencies() {
     ),
   );
 
-  
-
   //pode ser feito um singleton
   getIt.registerFactory<Controller>(
     () => Controller(

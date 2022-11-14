@@ -62,7 +62,6 @@ class Controller {
   }
 
   Future<void> saveData() async {
-    // final prefs = await SharedPreferences.getInstance();
     final cacheList = onlineList.map((e) => jsonEncode(e.toJson())).toList();
     await localStorageService.writeData(
       key: keyShared,
@@ -71,7 +70,6 @@ class Controller {
   }
 
   Future<List<ApitesteModel>> loadData() async {
-    // final prefs = await SharedPreferences.getInstance();
     final cacheList = await localStorageService.readData(key: keyShared);
     if (cacheList != null) {
       offlineList =
