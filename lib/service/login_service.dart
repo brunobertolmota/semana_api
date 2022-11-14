@@ -4,7 +4,7 @@ import 'package:semana_api/shared/app_configurations.dart';
 import 'package:semana_api/shared/error/errors.dart';
 
 class GetDataRepoService {
-  final DioClientImplement client;
+  final DioClientImpl client;
 
   GetDataRepoService({required this.client});
 

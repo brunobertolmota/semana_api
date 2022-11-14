@@ -3,28 +3,39 @@ import 'package:get_it/get_it.dart';
 import 'package:semana_api/controller/controller.dart';
 import 'package:semana_api/service/login_service.dart';
 import 'package:semana_api/service/shared_preference.dart';
+import 'package:semana_api/shared/client/cache_client.dart';
+import 'package:semana_api/shared/client/client.dart';
 import 'package:semana_api/shared/client/dio_implement.dart';
 
 final getIt = GetIt.instance;
 
 void initializeDependencies() {
   getIt.registerFactory<Dio>(
+    //pode ser adicionado varias opcoes ao dio
     () => Dio(),
   );
 
-  getIt.registerFactory<DioClientImplement>(
-    () => DioClientImplement(client: getIt<Dio>()),
+  getIt.registerFactory<DioClientImpl>(
+    () => DioClientImpl(
+      client: getIt<Dio>(),
+    ),
   );
 
-  getIt.registerFactory<SharedPreferenceTest>(
-    () => SharedPreferenceTest(),
+  getIt.registerFactory<SharedPreferenceTestImpl>(
+    () => SharedPreferenceTestImpl(),
   );
 
   getIt.registerFactory<GetDataRepoService>(
-      () => GetDataRepoService(client: getIt<DioClientImplement>()));
+    () => GetDataRepoService(
+      client: getIt<DioClientImpl>(),
+    ),
+  );
 
-  getIt.registerFactory<Controller>(() => Controller(
-        localStorageService: getIt<SharedPreferenceTest>(),
-        remoteService: getIt<GetDataRepoService>(),
-      ));
+  //pode ser feito um singleton
+  getIt.registerFactory<Controller>(
+    () => Controller(
+      remoteService: getIt<GetDataRepoService>(),
+      localStorageService: getIt<SharedPreferenceTestImpl>(),
+    ),
+  );
 }

@@ -14,7 +14,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final controller = getIt<Controller>();
+  final Controller controller = getIt<Controller>();
 
   @override
   Widget build(BuildContext context) {

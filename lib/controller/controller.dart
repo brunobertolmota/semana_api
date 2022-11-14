@@ -9,12 +9,14 @@ import 'package:semana_api/shared/error/errors.dart';
 
 class Controller {
   //get it da service
+  final SharedPreferenceTestImpl localStorageService;
   final GetDataRepoService remoteService;
-  final SharedPreferenceTest localStorageService;
   final String keyShared = 'apiList';
 
-  Controller({required this.remoteService, required this.localStorageService});
-
+  Controller({
+    required this.localStorageService,
+    required this.remoteService,
+  });
 
   TextEditingController input1 = TextEditingController();
   TextEditingController input2 = TextEditingController();

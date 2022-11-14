@@ -2,10 +2,10 @@ import 'package:semana_api/shared/client/client.dart';
 import 'package:semana_api/shared/client/response.dart';
 import 'package:dio/dio.dart' as dio;
 
-class DioClientImplement implements ApiClient {
+class DioClientImpl extends ApiClient {
   final dio.Dio client;
 
-  DioClientImplement({
+  DioClientImpl({
     required this.client,
   });
 

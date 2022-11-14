@@ -1,7 +1,7 @@
 import 'package:semana_api/shared/client/cache_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferenceTest implements CacheStore {
+class SharedPreferenceTestImpl implements CacheStore {
 
   @override
   Future<void> writeData({required String key, required List<String> list}) async {
