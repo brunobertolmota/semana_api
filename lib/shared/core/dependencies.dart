@@ -15,27 +15,29 @@ void initializeDependencies() {
     () => Dio(),
   );
 
-  getIt.registerFactory<DioClientImpl>(
+  getIt.registerFactory<ApiClient>(
     () => DioClientImpl(
       client: getIt<Dio>(),
     ),
   );
 
-  getIt.registerFactory<SharedPreferenceTestImpl>(
+  getIt.registerFactory<CacheStore>(
     () => SharedPreferenceTestImpl(),
   );
 
   getIt.registerFactory<GetDataRepoService>(
     () => GetDataRepoService(
-      client: getIt<DioClientImpl>(),
+      client: getIt<ApiClient>(),
     ),
   );
+
+  
 
   //pode ser feito um singleton
   getIt.registerFactory<Controller>(
     () => Controller(
       remoteService: getIt<GetDataRepoService>(),
-      localStorageService: getIt<SharedPreferenceTestImpl>(),
+      localStorageService: getIt<CacheStore>(),
     ),
   );
 }

@@ -1,10 +1,11 @@
 import 'package:semana_api/model/model.dart';
+import 'package:semana_api/shared/client/client.dart';
 import 'package:semana_api/shared/client/dio_implement.dart';
 import 'package:semana_api/shared/app_configurations.dart';
 import 'package:semana_api/shared/error/errors.dart';
 
 class GetDataRepoService {
-  final DioClientImpl client;
+  final ApiClient client;
 
   GetDataRepoService({required this.client});
 

@@ -4,12 +4,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:semana_api/model/model.dart';
 import 'package:semana_api/service/login_service.dart';
-import 'package:semana_api/service/shared_preference.dart';
+import 'package:semana_api/shared/client/cache_client.dart';
 import 'package:semana_api/shared/error/errors.dart';
 
 class Controller {
   //get it da service
-  final SharedPreferenceTestImpl localStorageService;
+  final CacheStore localStorageService;
   final GetDataRepoService remoteService;
   final String keyShared = 'apiList';
 
