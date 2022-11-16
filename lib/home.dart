@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:semana_api/controller/controller.dart';
+import 'package:semana_api/list_view.dart';
 import 'package:semana_api/shared/core/dependencies.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -67,6 +68,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     controller.textFilterNameAndAge(controller.input1.text, controller.input2.text);
                   },
                   child: const Text('filtrar por nome e idade na lista')),
+                  ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const ListViewPage() ));
+                  },
+                  child: const Text('tela da lista')),
               TextField( 
                 controller: controller.input1,
                 onChanged: controller.textFilterName,

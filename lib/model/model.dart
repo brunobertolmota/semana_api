@@ -15,6 +15,8 @@ class ApitesteModel {
         id: json["id"],
       );
 
+  get model => null;
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
 
@@ -23,5 +25,10 @@ class ApitesteModel {
     data["id"] = id;
 
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'Pessoa de nome: $nome  e idade: $idade' ;
   }
 }
