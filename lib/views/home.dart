@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:semana_api/controller/controller.dart';
-import 'package:semana_api/list_view.dart';
+import 'package:semana_api/views/list_view.dart';
 import 'package:semana_api/model/model.dart';
 import 'package:semana_api/shared/core/dependencies.dart';
 

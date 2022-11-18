@@ -1,9 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:semana_api/controller/controller.dart';
 import 'package:semana_api/model/model.dart';
-import 'package:semana_api/person_detail.dart';
+import 'package:semana_api/views/person_detail.dart';
 import 'package:semana_api/shared/core/dependencies.dart';
 
 class ListViewPage extends StatefulWidget {
@@ -19,7 +17,7 @@ class _ListViewState extends State<ListViewPage> {
     if (controller.offlineList.isEmpty) {
       controller.loadDataFromCache();
     }
-     super.initState();
+    super.initState();
   }
 
   void _handleTap(Person model) {
@@ -52,18 +50,18 @@ class _ListViewState extends State<ListViewPage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: controller.offlineList
                         .map(
-                          (card) => Card(
+                          (person) => Card(
                             child: Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Row(children: [
-                                Text(card.toString()),
+                                Text(person.toString()),
                                 const SizedBox(
                                   width: 20,
                                 ),
-                                controller.favoriteList.contains(card)
+                                controller.favoriteList.contains(person)
                                     ? GestureDetector(
                                         onTap: () => controller
-                                            .removePersonInFavorite(card),
+                                            .removePersonInFavorite(person),
                                         child: const Icon(
                                           Icons.star,
                                           color: Colors.yellow,
@@ -71,7 +69,7 @@ class _ListViewState extends State<ListViewPage> {
                                       )
                                     : GestureDetector(
                                         onTap: () => controller
-                                            .savePersonInFavorite(card),
+                                            .savePersonInFavorite(person),
                                         child: const Icon(Icons.star),
                                       ),
                               ]),
@@ -87,4 +85,3 @@ class _ListViewState extends State<ListViewPage> {
         ));
   }
 }
-

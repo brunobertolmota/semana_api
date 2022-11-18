@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:semana_api/home.dart';
+import 'package:semana_api/views/home.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
