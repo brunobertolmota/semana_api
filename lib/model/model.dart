@@ -1,17 +1,17 @@
-class ApitesteModel {
-  String? nome;
-  int? idade;
+class Person {
+  String? name;
+  int? age;
   String? id;
 
-  ApitesteModel({
-    this.nome,
-    this.idade,
+  Person({
+    this.name,
+    this.age,
     this.id,
   });
 
-  factory ApitesteModel.fromJson(Map<String, dynamic> json) => ApitesteModel(
-        nome: json["nome"],
-        idade: json["idade"],
+  factory Person.fromJson(Map<String, dynamic> json) => Person(
+        name: json["name"],
+        age: json["age"],
         id: json["id"],
       );
 
@@ -20,8 +20,8 @@ class ApitesteModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {};
 
-    data["nome"] = nome;
-    data["idade"] = idade;
+    data["name"] = name;
+    data["age"] = age;
     data["id"] = id;
 
     return data;
@@ -29,6 +29,6 @@ class ApitesteModel {
 
   @override
   String toString() {
-    return 'Pessoa de nome: $nome  e idade: $idade' ;
+    return 'Pessoa de nome: $name  e age: $age' ;
   }
 }

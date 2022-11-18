@@ -9,12 +9,12 @@ class GetDataRepoService {
 
   GetDataRepoService({required this.client});
 
-  Future<List<ApitesteModel>> getData() async {
+  Future<List<Person>> getData() async {
     final response = await client.get(path: AppConfigurations.mockUrl);
     switch (response.statusCode) {
       case 200:
         return List.from(response.data)
-            .map((e) => ApitesteModel.fromJson(e))
+            .map((e) => Person.fromJson(e))
             .toList();
 
       case 403:
@@ -31,7 +31,7 @@ class GetDataRepoService {
     }
   }
 
-  Future<List<ApitesteModel>> postData({body}) async {
+  Future<List<Person>> postData({body}) async {
     final response =
         await client.post(path: AppConfigurations.mockUrl, body: body);
     switch (response.statusCode) {

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:semana_api/controller/controller.dart';
 import 'package:semana_api/model/model.dart';
@@ -12,8 +14,15 @@ class ListViewPage extends StatefulWidget {
 
 class _ListViewState extends State<ListViewPage> {
   final Controller controller = getIt<Controller>();
+  @override
+  void initState() {
+    if (controller.offlineList.isEmpty) {
+      controller.loadDataFromCache();
+    }
+     super.initState();
+  }
 
-  void _handleTap(ApitesteModel model) {
+  void _handleTap(Person model) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => PersonDetailsPage(
@@ -28,34 +37,54 @@ class _ListViewState extends State<ListViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tabela pessoas'),
-      ),
-      body: ListView.separated(
-          separatorBuilder: (_, __) => const Divider(),
-          shrinkWrap: true,
-          itemCount: controller.offlineList.length,
-          itemBuilder: (context, index) {
-            final model = controller.offlineList[index];
-            return GestureDetector(
-              onTap: () => _handleTap(controller.offlineList[index]),
-              child: Card(
-                elevation: 4,
+        appBar: AppBar(
+          title: const Text('Tabela pessoas'),
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: AnimatedBuilder(
+              animation: controller,
+              builder: (context, child) => SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    children: [
-                      Text(model.id.toString()),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Text(model.toString()),
-                    ],
+                  padding: const EdgeInsets.symmetric(horizontal: 16.00),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: controller.offlineList
+                        .map(
+                          (card) => Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Row(children: [
+                                Text(card.toString()),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                controller.favoriteList.contains(card)
+                                    ? GestureDetector(
+                                        onTap: () => controller
+                                            .removePersonInFavorite(card),
+                                        child: const Icon(
+                                          Icons.star,
+                                          color: Colors.yellow,
+                                        ),
+                                      )
+                                    : GestureDetector(
+                                        onTap: () => controller
+                                            .savePersonInFavorite(card),
+                                        child: const Icon(Icons.star),
+                                      ),
+                              ]),
+                            ),
+                          ),
+                        )
+                        .toList(),
                   ),
                 ),
               ),
-            );
-          }),
-    );
+            ),
+          ),
+        ));
   }
 }
+

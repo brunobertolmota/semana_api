@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:semana_api/controller/controller.dart';
 import 'package:semana_api/model/model.dart';
+import 'package:semana_api/shared/core/dependencies.dart';
 
 class PersonDetailsPage extends StatelessWidget {
-  final ApitesteModel model;
+  final Person model;
+  final Controller controller = getIt<Controller>();
 
   PersonDetailsPage({
     super.key,
@@ -16,7 +19,11 @@ class PersonDetailsPage extends StatelessWidget {
       body: Column(
         children: [
           const Padding(padding: EdgeInsets.all(16.0)),
-          Text(textAlign: TextAlign.right ,model.toString()),
+          Text(textAlign: TextAlign.right, model.toString()),
+          ElevatedButton(
+            onPressed: () => controller.savePersonInFavorite(model),
+            child: Text('Adicionar ${model.name} a lista de favoritos'),
+          )
         ],
       ),
     );
@@ -24,7 +31,7 @@ class PersonDetailsPage extends StatelessWidget {
 }
 
 class PersonDetailsPageArgs {
-  final ApitesteModel model;
+  final Person model;
 
   PersonDetailsPageArgs({
     required this.model,
